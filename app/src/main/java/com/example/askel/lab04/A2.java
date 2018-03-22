@@ -1,7 +1,6 @@
 package com.example.askel.lab04;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,22 +12,22 @@ import java.util.Random;
 public class A2 extends AppCompatActivity {
 
     private EditText etUsr;
-    private Button btn;
     private String usrName;
-   private Random random;
-   private static final String alphabet = "AIUEOKTNAIUEOKRMNAIUEO";
+    private Random random;
+    private static final String alphabet = "AIUEOKTNAIUEOKRMNAIUEO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a2);
 
-       random = new Random();
-       String generatedName = getRandomString();
+        Button btn;
+        random = new Random();
+        String generatedName = getRandomString();
         etUsr = (EditText) findViewById(R.id.et_auth);
         btn = (Button) findViewById(R.id.btn_auth);
 
-       etUsr.setText(generatedName);
+        etUsr.setText(generatedName);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

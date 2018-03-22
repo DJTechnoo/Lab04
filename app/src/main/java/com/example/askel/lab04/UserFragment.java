@@ -29,9 +29,6 @@ import java.util.Collections;
 public class UserFragment extends Fragment {
     private static final String TAG = "Tab2Frag";
 
-    private DatabaseReference mDb;
-
-
     private ListView listView;
     private ArrayList<String> userList;
     private ArrayAdapter<String> adapter;
@@ -41,6 +38,7 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_fragment, container, false);
 
+        DatabaseReference mDb;
         mDb = FirebaseDatabase.getInstance().getReference();
         listView = (ListView) view.findViewById(R.id.userlist);
 

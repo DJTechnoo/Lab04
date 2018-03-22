@@ -16,8 +16,6 @@ import java.util.ArrayList;
 
 public class A3 extends AppCompatActivity {
     private String userName;
-    private DatabaseReference mDb;
-
     private ListView listView;
     private ArrayList<String> msgList;
     private ArrayAdapter<String> adapter;
@@ -26,6 +24,8 @@ public class A3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a3);
+
+        DatabaseReference mDb;
 
         mDb = FirebaseDatabase.getInstance().getReference();
 

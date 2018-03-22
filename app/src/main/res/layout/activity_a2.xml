@@ -10,19 +10,20 @@
         android:id="@+id/txt_auth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="You may change it ^_^"/>
+        android:text="@string/you_may_change_it"/>
 
     <EditText
         android:id="@+id/et_auth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:layout_below="@id/txt_auth"/>
 
     <Button
         android:id="@+id/btn_auth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ACCEPT USERNAME"
+        android:text="@string/accept_username"
         android:layout_below="@id/et_auth"/>
 
 </RelativeLayout>

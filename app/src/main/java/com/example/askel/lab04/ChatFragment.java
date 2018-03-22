@@ -1,7 +1,6 @@
 package com.example.askel.lab04;
 
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +29,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +60,7 @@ public class ChatFragment extends Fragment {
     private boolean notify = false;
     private boolean activityBackGround;
 
-    final static int A2_INTENT = 1;
+    private final static int A2_INTENT = 1;
 
     @Nullable
     @Override
@@ -185,7 +178,7 @@ public class ChatFragment extends Fragment {
         //  username + date + message add to db *_*
         String msg;
         msg = et_msg.getText().toString();
-        if( (msg != null) && (msg.length() <= 255) && !(msg.matches("")) ) {
+        if( (msg.length() <= 255) && !(msg.matches("")) ) {
           msg = userName + " says: " + msg;
             Map<String, String> map = new HashMap<>();
             map.put("u", userName);
@@ -196,12 +189,12 @@ public class ChatFragment extends Fragment {
             hideKeyboard(getActivity());
             adapter.notifyDataSetChanged();
         }
-        msg = "";
+
         et_msg.setText("");
 
     }
 
-    public void userInit(){
+    private void userInit(){
 
         userPref();
         if( (userName == null) || (userName.isEmpty()) ) {
@@ -212,7 +205,7 @@ public class ChatFragment extends Fragment {
 
     }
 
-    public void userPref(){
+    private void userPref(){
         SharedPreferences userPref = getActivity().getSharedPreferences(
                 userPrefFile,
                 getActivity().MODE_PRIVATE
@@ -221,7 +214,7 @@ public class ChatFragment extends Fragment {
         userName = name;
     }
 
-    public static void hideKeyboard(Activity activity) {
+    private static void hideKeyboard(Activity activity) {
         View view = activity.findViewById(android.R.id.content);
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -229,7 +222,7 @@ public class ChatFragment extends Fragment {
         }
     }
 
-    public void notificationCall(){
+    private void notificationCall(){
         NotificationCompat.Builder notificationBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(getContext())
                 .setDefaults(NotificationCompat.DEFAULT_ALL)

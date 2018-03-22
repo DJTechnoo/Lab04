@@ -23,7 +23,7 @@ import android.widget.TextView;
 public class A1 extends AppCompatActivity {
 
     private static final String TAG = "A1";
-    private ViewPager mViewPager;
+   // private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class A1 extends AppCompatActivity {
 
 
         // mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
