@@ -2,6 +2,7 @@ package com.example.askel.lab04;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -64,6 +65,7 @@ public class ChatFragment extends Fragment {
     private ArrayAdapter<String> adapter;
 
     private boolean notify = false;
+    private boolean activityBackGround;
 
     final static int A2_INTENT = 1;
 
@@ -74,7 +76,7 @@ public class ChatFragment extends Fragment {
     {
         View view = inflater.inflate(R.layout.chat_fragment, container, false);
 
-        handler = new Handler();
+
         mDb = FirebaseDatabase.getInstance().getReference();
 
         // get views
@@ -95,7 +97,6 @@ public class ChatFragment extends Fragment {
         //  Get the local username from device if used before.
         //  otherwise start new activity for username
         userInit();
-
         mDb.child("msg").addChildEventListener(new OnChatListener());
 
         // post message
@@ -106,7 +107,8 @@ public class ChatFragment extends Fragment {
             }
         });
 
-        handler = new Handler();
+
+       handler = new Handler();
 
         // run feed update every frequency-time
         runnable = new Runnable()
@@ -133,7 +135,8 @@ public class ChatFragment extends Fragment {
             messageList.add(retrievedMsg);
             adapter.notifyDataSetChanged();
             messages.setSelection(adapter.getCount() - 1);
-            notify = true;
+            if((userName != null) &&(!userName.matches(dataSnapshot.child("u").getValue(String.class))))
+                if(activityBackGround) notify = true;
         }
 
         @Override
@@ -199,12 +202,14 @@ public class ChatFragment extends Fragment {
     }
 
     public void userInit(){
+
         userPref();
         if( (userName == null) || (userName.isEmpty()) ) {
             Intent intent = new Intent(getActivity(), A2.class);
             startActivityForResult(intent, A2_INTENT);
         }
         txt1.setText(userName);
+
     }
 
     public void userPref(){
@@ -231,8 +236,21 @@ public class ChatFragment extends Fragment {
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
                 .setContentTitle("You've Got Mail! XD");
 
-        NotificationManagerCompat notificationManager =
-                NotificationManagerCompat.from(getContext());
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+
+
+
+        Intent intent = new Intent(getContext(), A1.class);
+        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pend = PendingIntent.getActivity(
+                getActivity(),
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        notificationBuilder.setAutoCancel(true);
+        notificationBuilder.setContentIntent(pend);
+
         notificationManager.notify(0, notificationBuilder.build());
         notify = false;
     }
@@ -247,7 +265,7 @@ public class ChatFragment extends Fragment {
         @Override
         protected Boolean doInBackground(Void... voids) {
             if(notify){
-                notificationCall();
+               notificationCall();
 
             }
 
@@ -263,4 +281,17 @@ public class ChatFragment extends Fragment {
             }
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        activityBackGround = false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        activityBackGround = true;
+    }
+
 }

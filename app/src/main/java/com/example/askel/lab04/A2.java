@@ -8,19 +8,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Random;
+
 public class A2 extends AppCompatActivity {
 
     private EditText etUsr;
     private Button btn;
     private String usrName;
+   private Random random;
+   private static final String alphabet = "AIUEOKTNAIUEOKRMNAIUEO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a2);
 
+       random = new Random();
+       String generatedName = getRandomString();
         etUsr = (EditText) findViewById(R.id.et_auth);
         btn = (Button) findViewById(R.id.btn_auth);
+
+       etUsr.setText(generatedName);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,5 +41,20 @@ public class A2 extends AppCompatActivity {
             }
         });
 
+    }
+
+   private String getRandomString(){
+        int len = 20;
+        String s ="";
+        char[] text = new char[len];
+
+
+
+        for(int i = 0; i < len; i++)
+            text[i] = alphabet.charAt(random.nextInt(alphabet.length()));
+
+        for(int i = 0; i < text.length; i++)
+            s += text[i];
+        return s;
     }
 }
